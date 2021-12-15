@@ -2,60 +2,51 @@
 
 using namespace std;
 
-// void selection2Sort(int A[], int n, char smjer)
-// {
-//     for (int i = 0; i < n / 2; i++)
-//     {
-//         int min = i, max = n - 1 - i, tmin, tmax;
-//         for (int j = i; j < n - i; j++)
-//         {
-//             if (A[min] > A[j])
-//                 min = j;
-//             if (A[max] < A[j])
-//                 max = j;
-//         }
-//         int smaller = smjer == '0' ? i : n - 1 - i;
-//         int larger = smjer == '0' ? n - 1 - i : i;
-//         tmin = A[min];
-//         tmax = A[max];
-//         A[min] = A[smaller];
-//         A[max] = A[larger];
-//         A[smaller] = tmin;
-//         A[larger] = tmax;
-//     }
-// }
-
-void selection2Sort(int A[], int n, char smjer)
+void selection2Sort(int *arr, int n, char smjer)
 {
-    int i, j, min, max;
-    for (i = 0; i < n / 2; i++)
+    for (int i = 0, j = n - 1; i < j; i++, j--)
     {
-        min = i;
-        max = n - 1 - i;
-        int tmin, tmax;
-        for (j = i; j < n - i; j++)
+        int min = arr[i], max = arr[i];
+        int min_i = i, max_i = i;
+        for (int k = i; k <= j; k++)
         {
-            if (A[j] < A[min])
-                min = j;
-            if (A[j] > A[max])
-                max = j;
+            if (arr[k] > max)
+            {
+                max = arr[k];
+                max_i = k;
+            }
+            else if (arr[k] < min)
+            {
+                min = arr[k];
+                min_i = k;
+            }
         }
-        //swap
-        // int tmp = A[i];
-        // A[i] = A[min];
-        // A[min] = tmp;
+        if (smjer == '0')
+        {
+            // shifting the min.
+            swap(arr[i], arr[min_i]);
 
-        // tmp = A[n - 1 - i];
-        // A[n - 1 - i] = A[max];
-        // A[max] = tmp;
-        int smaller = smjer == '0' ? i : n - 1 - i;
-        int larger = smjer == '0' ? n - 1 - i : i;
-        tmin = A[min];
-        tmax = A[max];
-        A[min] = A[smaller];
-        A[max] = A[larger];
-        A[smaller] = tmin;
-        A[larger] = tmax;
+            // Shifting the max. The equal condition
+            // happens if we shifted the max to arr[min_i]
+            // in the previous swap.
+            if (arr[min_i] == max)
+                swap(arr[j], arr[min_i]);
+            else
+                swap(arr[j], arr[max_i]);
+        }
+        else
+        {
+            // shifting the max.
+            swap(arr[i], arr[max_i]);
+
+            // Shifting the min. The equal condition
+            // happens if we shifted the min to arr[max_i]
+            // in the previous swap.
+            if (arr[max_i] == min)
+                swap(arr[j], arr[max_i]);
+            else
+                swap(arr[j], arr[min_i]);
+        }
     }
 }
 
@@ -63,7 +54,7 @@ int main()
 {
     int n = 5;
     int A[n]{9, 3, 1, 5, 8};
-    selection2Sort(A, n, '0');
+    selection2Sort(A, n, '1');
     for (int i = 0; i < n; i++)
     {
         cout << A[i] << " ";
