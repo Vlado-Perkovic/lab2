@@ -8,7 +8,7 @@ class Stog
     template <typename X>
     struct stogElement
     {
-        X data;
+        X item;
         stogElement<X> *next;
     };
 
@@ -18,7 +18,7 @@ public:
     Stog() : top(nullptr) {}
     bool push(T item)
     {
-        StackElement<T> *newElement = new (nothrow) StackElement<T>;
+        StogElement<T> *newElement = new (nothrow) StogElement<T>;
         if (newElement == nullptr)
             return false;
         newElement->item = item;
@@ -32,7 +32,7 @@ public:
         if (top == nullptr)
             return false;
         item = top->item;
-        StackElement<T> *tmp = top;
+        StogElement<T> *tmp = top;
         top = top->next;
         delete tmp;
         return true;
