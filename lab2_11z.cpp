@@ -22,14 +22,14 @@ void swap(zapis &z1, zapis &z2)
 
 void obicanBubbleSort(zapis A[], int n, char smjer)
 {
-    int i, j;
+   int i, j;
     for (i = 0; i < n - 1; i++)
     {
-        for (j = i + 1; j < n; j++)
+        for (j = 0; j < n - 1 - i; j++)
         {
-            if (smjer == '0' ? A[i] > A[j] : A[j] > A[i])
+            if (smjer == '0' ? A[j + 1] > A[j] : A[j] > A[j + 1])
             {
-                swap(A[i], A[j]);
+                swap(A[j + 1], A[j]);
             }
         }
     }
